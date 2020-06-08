@@ -1,4 +1,13 @@
-Day 1 - 08.06.20
+Day 1 - 08.06.20 start: 6:55
 
 - create project on GitHub
-- create project in inDesign
+- create project in inVision https://tytool.invisionapp.com/freehand/ml-dj-app-jqbELciaJ
+- setup project  front end and django
+- create drop photos and show photos on the frontend
+- watching and makeing tutorial https://www.udemy.com/course/image-classifier-with-django-and-react/
+
+
+end 13:00
+
+
+Day 2 - 09.06.20 start...
