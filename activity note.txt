@@ -11,3 +11,5 @@ end 13:00
 
 
 Day 2 - 09.06.20 start...
+
+- make tutorial https://www.youtube.com/watch?v=_3xj9B0qqps in Demo 2
