@@ -11,5 +11,25 @@ end 13:00
 
 
 Day 2 - 09.06.20 start...
-
+start: 10:00
 - make tutorial https://www.youtube.com/watch?v=_3xj9B0qqps in Demo 2
+- make prototype
+- make 
+
+end: 22:00
+
+Day 3 11.06.20
+start 17:00
+- try manage image from frontend in view but this is not working because
+ image need to be in model firtly. 
+
+end 22:00
+
+
+Day4 12.06.20
+start 07.34
+
+- try do what yesterday in today
+
+
+

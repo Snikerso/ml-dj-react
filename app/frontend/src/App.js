@@ -93,13 +93,25 @@ function App() {
     </div>
   ));
 
+  const handleSend = () => {
+    fetch(`http://127.0.0.1:8000/api/image/cos/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // body: JSON.stringify({ title: magName })
+    }).then(res =>
+      console.log(res.json())
+
+    )
+  }
 
   return (
     <>
       <MainTemplate>
         <StyledWrapperDescription>
           <Header>Guess who?</Header>
-
+          <button onClick={handleSend}></button>
 
           <Header header1>How it works</Header>
 
