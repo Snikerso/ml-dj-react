@@ -16,9 +16,9 @@ const Header = styled.div`
     ${({ header1 }) => header1 && css`
     text-align: left;
     font: Bold  Rubik;
-    font-size:45px;
+    font-size:40px;
     align-self:end;
-        
+    
     `}
 
 `

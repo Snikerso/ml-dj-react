@@ -29,7 +29,8 @@ end 22:00
 Day4 12.06.20
 start 07.34
 
-- try do what yesterday in today
+- sn
+
 
 
 

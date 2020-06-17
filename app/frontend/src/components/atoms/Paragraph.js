@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled ,{css} from 'styled-components'
 
 
 const Paragraph = styled.p`
@@ -11,6 +11,15 @@ const Paragraph = styled.p`
     opacity: 1;
 
 
+    ${({ show }) => show && css`
+
+        text-decoration: underline overline;
+        align-self: end;
+        
+    `}
+
 `
+
+
 
 export default Paragraph

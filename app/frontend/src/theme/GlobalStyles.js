@@ -22,6 +22,7 @@ const GlobalStyles = createGlobalStyle`
         background-color:hsla(212, 96%, 10%, 1);
         margin:7%;
         margin-top:3%;
+        margin-bottom:20px;
     }
     `;
 
