@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from decouple import 
+from decouple import config
 from dj_database_url import parse as dburl
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =config('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['guesswho-cn.herokuapp.com','127.0.0.1']
 
 
 # Application definition
@@ -38,15 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'regression',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'regression',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-        'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'mysite.urls'
 
 CORS_ORIGIN_WHITELIST =[
     'http://localhost:3000',
-
+    'https://guess-whoo.netlify.app',
 ]
 
 
@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {
-    'default':config('DATABASE_URL',default=default_dburl,cast=dburl),
+    'default': config('DATABASE_URL',default=default_dburl,cast=dburl),
     
 }
 
@@ -132,5 +132,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),'media_root')
+MEDIA_ROOT = os.path.join(BASE_DIR,'media_root')
 MEDIA_URL = '/miedia/'

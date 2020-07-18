@@ -1,43 +1,68 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios'
-import styled,{css} from 'styled-components'
-import MainTemplate from './templates/MainTemplate'
+import ReactDOM from 'react-dom';
+import axios from 'axios';
+import styled, { css } from 'styled-components/macro';
+import MainTemplate from './templates/MainTemplate';
 import DropTarget from 'components/molecules/DropTarget';
 import Button from 'components/atoms/Button';
 import Header from 'components/atoms/Header';
 import Paragraph from 'components/atoms/Paragraph';
 import Image from 'components/atoms/Image';
 import Puzzles from 'components/atoms/Puzzles';
+import Loader from 'components/atoms/Loader';
 import { StyledWrappedResultImages, StyledWrapperDescription, StyledWrapperDrops, StyledWrappedResult, StyledWrappedImages, StyledWrapperPuzzles } from 'components/atoms/Wrappers';
 
 
 const StyledWrapper = styled.div`
-display:flex;
-flex-direction:column;
+    display:flex;
+    flex-direction:column;
+`
+const ParagraphMore = styled(Paragraph)`
+            width: 80px;
+    text-align: left;
+    align-self: flex-end;
+    justify-self: self-start;
+    margin:0;
+    margin-bottom:60px;
+      @media (min-width: 400px) {
+        width: 80px;
+        text-align: center;
+  }
 `
 
 const Head = styled.div`
+
     color: ${props => props.theme.secondary};
     text-align: left;
     font: Bold  Rubik;
-    font-size:20px;
+    font-weight:bold;
+    font-size:32px;
     letter-spacing: 0px;
     opacity: 1;
-    margin-top:30px;
+    margin-top: 30px;
+    margin-bottom: 34px;
 
-  
     ${({ similarity }) => similarity && css`
-         
+      margin-left: 20px;
+      margin-top:155px;
       color:${props => props.theme.thirt};
+        
+    `}
+    ${({ white }) => white && css`
+         
+      color:${props => props.theme.white_mint};
+      text-align: center;
         
     `}
 
 `
 const StyledButton = styled(Button)`
+
   align-self:center;
 
-
 `
+
+
 function App() {
 
   const [filesTarget, setFilesTarget] = useState([]);
@@ -46,8 +71,10 @@ function App() {
   const [picurePredicted, setPicturePredicted] = useState('');
   const [beta, setBeta] = useState([]);
   const [pictures, setPictures] = useState([]);
+  const [showLoading, setShowLoading] = useState(false)
 
   const scrollRef = useRef(null)
+  const scrollRefLoader = useRef(null)
 
   const thumbsTarget = filesTarget.map(file => (
 
@@ -73,9 +100,15 @@ function App() {
       top: scrollRef.current.offsetTop
     })
   }
+  const scrollAfterLoader = () => {
+    window.scrollTo({
+      behavior: "smooth",
+      top: scrollRefLoader.current.offsetTop
+    })
+  }
 
   const handleSend = () => {
-
+    setShowLoading(true)
     let form_data = new FormData();
     form_data.append('title', "targetimage");
     form_data.append('picture_target', filesTarget[0], filesTarget[0].name);
@@ -85,7 +118,7 @@ function App() {
     form_data.append('picture4', filesTraining[3], filesTraining[3].name);
     form_data.append('picture5', filesTraining[4], filesTraining[4].name);
     form_data.append('picture6', filesTraining[5], filesTraining[5].name);
-    let url = 'http://127.0.0.1:8000/api/image/';
+    let url = `${process.env.REACT_APP_API_URL}/api/image/`;
 
     axios.post(url, form_data, {
       headers: {
@@ -104,9 +137,17 @@ function App() {
         let array = filesTraining.map((item, value) => { return { ...item, beta: betas[value] } })
         setPictures(array)
 
+        setShowLoading(false)
+        scrollAfterLoader()
+
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err)
+        setShowLoading(false)
+      }
+      )
   };
+
 
 
 
@@ -121,22 +162,31 @@ function App() {
             <Header header1>How it works</Header>
 
             <StyledWrapperPuzzles>
-              <Paragraph style={{ width: '50%' }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Paragraph>
-              <Puzzles width={'180px'} />
+              <Paragraph >
+                Hello! In this app you can create a photo which is composed from 6 other photos (training images) and the create photo is most suited to 1 photo (target image). Will be the best if your pictures of the characters, will be from your favorite series or movie and are of equal dimensions, because the program cut them to equal dimensions and if the character's face is on the side of the picture, it may not catch it.  </Paragraph>
+              <Puzzles left={130} width={'250px'} top ={-60} />
             </StyledWrapperPuzzles>
-
-
             <Button started onClick={scrollTo}>Lets get started</Button>
+
+
+
           </StyledWrapperDescription>
 
           <StyledWrapperDrops ref={scrollRef} name="test1">
             <DropTarget
-              title={'Drop target photo'}
+              title1={'Drop'}
+              title2={'target'}
+              title3={'photo'}
               files={filesTarget}
-              setFiles={setFilesTarget} />
+              setFiles={setFilesTarget}
+            />
+
 
             <DropTarget
-              title={'Drop training photo'}
+              title1={'Drop '}
+              title2={'training'}
+              title3={'photo'}
+
               files={filesTraining}
               setFiles={setFilesTraining} />
           </StyledWrapperDrops>
@@ -144,30 +194,30 @@ function App() {
 
           {filesTarget.length > 0 && <Head>Target Photo</Head>}
 
+          {thumbsTarget}
 
-     
-            {thumbsTarget}
-
-          {filesTraining.length > 0 && <Head>Training Images</Head>}
+          {filesTraining.length > 0 && <Head>Training photos</Head>}
 
           <StyledWrappedImages>
             {thumbsTraining}
+            {(filesTraining.length >= 4 && filesTraining.length > showAll) && <ParagraphMore show onClick={() => setShowAll(showAll + 4)}>Show all</ParagraphMore>}
+            {showAll > 4 && <ParagraphMore show onClick={() => setShowAll(4)}>Fold</ParagraphMore>}
+
           </StyledWrappedImages>
-          {(filesTraining.length >= 4 && filesTraining.length > showAll) && <Paragraph show onClick={() => setShowAll(showAll + 4)}>show more</Paragraph>}
-          {showAll > 4 && <Paragraph show onClick={() => setShowAll(4)}>show less</Paragraph>}
 
 
           <StyledButton onClick={handleSend}>Predict</StyledButton>
+          {showLoading && <Loader>dsadsa</Loader>}
 
 
           {picurePredicted && (
             <>
-              <StyledWrappedResult>
+              <StyledWrappedResult ref={scrollRefLoader}>
                 <div>
-                  <Head>Target</Head>
+                  <Head white>Target</Head>
                   <Image srce={filesTarget[0].preview} />
                 </div>
-                <Puzzles width={'150px'} />
+                <Puzzles width={'150px'} top={30 }/>
                 <div>
                   <Head>Predicted</Head>
                   <Image srce={picurePredicted} />

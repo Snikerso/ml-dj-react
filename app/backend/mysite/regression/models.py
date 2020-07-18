@@ -1,11 +1,11 @@
 from django.db import models
 from sklearn.linear_model import LinearRegression
-from keras.preprocessing.image import load_img , img_to_array
 import numpy as np
 from matplotlib import image, pyplot
-from PIL import Image
-import cv2
+import PIL
+from django.core.files import File
 import scipy.misc
+from io import BytesIO
 
 
 # Create your models here.
@@ -38,16 +38,31 @@ class Image(models.Model):
             picture5_color = image.imread(self.picture5)
             picture6_color = image.imread(self.picture6)
 
+            picture_list = [picture_target_color, picture1_color, picture2_color, picture3_color, picture4_color, picture5_color, picture6_color]
+            list_x = [i.shape[0] for i in picture_list ]
+            list_y = [i.shape[1] for i in picture_list ]
 
-            picture_target_discolor = picture_target_color[:200,:200,0]
-            picture1_discolor = picture1_color[:200,:200,0]
-            picture2_discolor = picture2_color[:200,:200,0]
-            picture3_discolor = picture3_color[:200,:200,0]
-            picture4_discolor = picture4_color[:200,:200,0]
-            picture5_discolor = picture5_color[:200,:200,0]
-            picture6_discolor = picture6_color[:200,:200,0]
+            x = [i.shape[0] for i in picture_list ]
+            y = [i.shape[1] for i in picture_list ]
+            x.sort()
+            y.sort()
+            shortest_x = x[0]
+            shortest_y = y[0]
+
+
+            picture_target_discolor = picture_target_color[:shortest_x,:shortest_y ,0]
+            picture1_discolor = picture1_color[:shortest_x,:shortest_y ,0]
+            picture2_discolor = picture2_color[:shortest_x,:shortest_y ,0]
+            picture3_discolor = picture3_color[:shortest_x,:shortest_y ,0]
+            picture4_discolor = picture4_color[:shortest_x,:shortest_y ,0]
+            picture5_discolor = picture5_color[:shortest_x,:shortest_y ,0]
+            picture6_discolor = picture6_color[:shortest_x,:shortest_y ,0]
             
+
             pictures = [picture_target_discolor, picture1_discolor, picture2_discolor,picture3_discolor,picture4_discolor,picture5_discolor,picture6_discolor]
+
+            for i in pictures:
+                print(i.shape)
          
 
             pictures_flatten=[]
@@ -62,13 +77,18 @@ class Image(models.Model):
             intercept = lr.intercept_
 
             predicted_predict = beta[0] *picture1_discolor + beta[1] *picture2_discolor + beta[2]* picture3_discolor + beta[3]* picture4_discolor + beta[4]* picture5_discolor + beta[5]* picture6_discolor + intercept
-            predicted_predict = np.asarray(predicted_predict)
-            pyplot.imsave("../media_root/predicted.jpg", predicted_predict)
+            pyplot.axis('off')
+            
+            pyplot.imshow(predicted_predict)
+            thumb_io = BytesIO()
+            pyplot.savefig(thumb_io, dpi=300, bbox_inches='tight', pad_inches=0)
 
-            self.picture_predicted = "predicted.jpg"
+            im = PIL.Image.open(thumb_io)
+            self.picture_predicted = File(thumb_io, name="jpg.png")
+
             betastring = ' '.join([str(elem) for elem in beta]) 
             self.beta = betastring
-            print(betastring)
+
 
             
 

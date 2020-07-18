@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 
 import { useDropzone } from 'react-dropzone';
@@ -7,7 +7,8 @@ import IconImage from 'components/atoms/DropImageArea'
 
 
 const Paragraph = styled.p`
-    font: Bold 41px/48px Rubik;
+    font: Bold Rubik;
+    font-size: 41px;
     color: hsla(169, 100%, 97%, 1);
 
 `
@@ -29,7 +30,7 @@ const mystyle = {
 };
 function DropTarget(props) {
 
-    const { title, files, setFiles } = props;
+    const { title1, title2, title3, files, setFiles } = props;
 
 
 
@@ -55,15 +56,7 @@ function DropTarget(props) {
     }
 
 
-    const thumbs = files.map(file => (
-        <div key={file.name}>
-            <div >
-                <img
-                    src={file.preview}
-                />
-            </div>
-        </div>
-    ));
+
 
     useEffect(() => () => {
         files.forEach(file => URL.revokeObjectURL(file.preview));
@@ -74,7 +67,7 @@ function DropTarget(props) {
 
         <div style={mystyle} {...getRootProps({ className: 'dropzone' })}>
             <input {...getInputProps()} />
-            <Paragraph>{title}</Paragraph>
+            <Paragraph>{title1} <span style={{color:'#F9DC5C',fontWeight:'bold'}}>{title2}</span> {title3}</Paragraph>
             <IconImage />
         </div>
 
@@ -82,3 +75,4 @@ function DropTarget(props) {
 }
 
 export default DropTarget
+

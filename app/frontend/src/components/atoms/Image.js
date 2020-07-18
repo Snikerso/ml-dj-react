@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components/macro'
 import { IconAccept, IconDelete } from 'components/atoms/Icons';
 
 const StyledWrapper = styled.div`
@@ -11,9 +11,11 @@ const StyledWrapper = styled.div`
 `
 const Head = styled.div`
     color: ${props => props.theme.secondary};
-    text-align: left;
-    font: Bold  Rubik;
-    font-size:10px;
+    width: 100%;
+    font: Rubik;
+    font-size:16px;
+    font-weight:medium;
+    margin-top:5px;
     letter-spacing: 0px;
     opacity: 1;
 `
@@ -21,7 +23,7 @@ const Head = styled.div`
 const StyledWrapperPredicted = styled.div`
     display:grid ;
     grid-template-columns:1fr;
-    text-align:center;
+
     justify-items:center;
     margin-bottom:10px;
     svg{
@@ -53,7 +55,6 @@ function Image({ srce, typeimage, beta }) {
                 <>
                     <StyledWrapper>
                         <Img style={{ backgroundImage: `url(${srce})` }} />
-                        <IconDelete />
                     </StyledWrapper>
 
                 </>

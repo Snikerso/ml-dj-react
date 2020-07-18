@@ -1,4 +1,4 @@
-import styled,{css} from 'styled-components'
+import styled,{css} from 'styled-components/macro'
 
 
 const Button = styled.button`
@@ -12,13 +12,15 @@ const Button = styled.button`
     outline: none;
     border:none;
     text-align: center;
-    font: Bold 25px/29px Rubik;
+    font:  Rubik;
+    font-weight:bold;
+    font-size:25px;
     letter-spacing: 0px;
     color: hsla(169, 100%, 97%, 1);
     opacity: 1;
 
     :hover{
-        opacity:0.8;
+        background-color:#1CA960;
     }
 
 

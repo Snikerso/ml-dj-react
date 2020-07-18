@@ -1,7 +1,7 @@
 import React from 'react'
 import { ReactComponent as IconYes1 } from 'assets/iconmonstr-check-mark-4.svg'
 import { ReactComponent as IconX1 } from 'assets/iconmonstr-x-mark-4.svg'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const IconYes = styled(IconYes1)`
     .a{

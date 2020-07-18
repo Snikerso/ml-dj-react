@@ -1,22 +1,23 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 export const StyledWrapperDescription = styled.div`
-  min-height:90vh;
+  min-height:80vh;
   position:relative;
   display:grid;
-  margin-bottom:10vh;
+  margin-bottom:5vh;
 
 `
 export const StyledWrapperDrops = styled.div`
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:1fr 1fr;
   align-content:center;
   justify-items:center;
   justify-content:center;
+  margin-top: 50px;
+  margin-bottom: 70px;
+  gap:80px;
   >div{
-    margin:20px;
-    flex-basis:400px;
+
   }
 
 
@@ -26,16 +27,17 @@ export const StyledWrappedImages = styled.div`
   display:flex;
   flex-direction:row;
   flex-wrap: wrap;
-  justify-items: center;
-  align-content:center;
-  justify-content:space-around;
+  max-height: 500px;
+  justify-items: flex-start;
+  align-content:flex-start;
+  justify-content:flex-start;
   align-content:space-around;
 
 
   
-  .div{
-    margin-bottom:10px;
-    margin-right:10px;
+  div{
+    margin-bottom:30px;
+    margin-right:30px;
   }
 
 `
@@ -53,6 +55,9 @@ export const StyledWrappedResult = styled.div`
   justify-content:space-around;
   align-content:space-around;
   margin-top:20px;
+  width: 600px;
+  margin: 0 auto;
+  margin-top:80px;
 
 
 `
@@ -64,7 +69,13 @@ export const StyledWrappedResultImages = styled.div`
   align-content:space-around;
 
   div:nth-child(1) div:nth-child(1){
-    border:3px solid green;
+    border:3px solid ${props => props.theme.thirt};
   }
+
+  div:nth-child(1) div:nth-child(2){
+ 
+    color: ${props => props.theme.thirt};
+  }
+
 
 `
